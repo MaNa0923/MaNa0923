@@ -1,5 +1,6 @@
 // 导入axios
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 import loading from './loading'
 
@@ -34,18 +35,27 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    // 关闭loading加载
     loading.close()
-    return response
+
+    const { success, message, data } = response.data
+    //   要根据success的成功与否决定下面的操作
+    if (success) {
+      return data
+    } else {
+      // 业务错误
+      ElMessage.error(message) // 提示错误消息
+      return Promise.reject(new Error(message))
+    }
   },
   (error) => {
-    // 关闭loading加载
     loading.close()
+    // TODO: 将来处理 token 超时问题
+    ElMessage.error(error.message) // 提示错误信息
     return Promise.reject(error)
   }
 )
 
-// 统一了传参处理
+// 统一传参处理
 const request = (options) => {
   if (options.method.toLowerCase() === 'get') {
     options.params = options.data || {}

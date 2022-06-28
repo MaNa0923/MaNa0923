@@ -10,7 +10,6 @@
         <h3 class="title">用户登录</h3>
         <svg-icon className="svg-language" icon="language"></svg-icon>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <el-icon>
@@ -19,7 +18,6 @@
         </span>
         <el-input v-model.trim="loginForm.username" />
       </el-form-item>
-
       <el-form-item prop="password">
         <span class="svg-container">
           <el-icon>
@@ -44,9 +42,14 @@
 </template>
 
 <script setup>
+import util from '../../utils/util'
 import { reactive, ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { validatePassword } from './rules'
-import UserApi from '../../api/user'
+
+const store = useStore()
+const router = useRouter()
 
 const inputType = ref('password')
 const LoginForm = ref()
@@ -78,22 +81,25 @@ const passwordIconStatus = computed(() => {
 })
 
 /**
- * 密码框状态切换方法
+ * 登录方式
  */
-const handllePassWordStatus = () => {
-  inputType.value = inputType.value === 'password' ? 'text' : 'password'
-}
-
 const handleLoginSubmit = async () => {
   if (!LoginForm.value) return
   await LoginForm.value.validate(async (valid) => {
     if (valid) {
-      alert('登录')
+      const newLoginForm = util.deepCopy(loginForm)
 
-      const response = await UserApi.login(loginForm)
-      console.log(response)
+      const response = await store.dispatch('user/login', newLoginForm)
+      if (response.token) router.push('/')
     }
   })
+}
+
+/**
+ * 密码框状态切换方法
+ */
+const handllePassWordStatus = () => {
+  inputType.value = inputType.value === 'password' ? 'text' : 'password'
 }
 </script>
 
