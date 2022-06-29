@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import sidebar from './components/Sidebar.vue'
+import sidebar from './components'
 import Navbar from './Navbar.vue'
 import AppMain from './AppMain.vue'
 </script>
