@@ -9,7 +9,7 @@ router.beforeEach((to, from, next) => {
   const token = store.getters.token
   if (token) {
     if (to.path === '/login') {
-      next(from.path)
+      next('/')
     } else {
       next()
     }

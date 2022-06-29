@@ -2,8 +2,9 @@
   <div class="app-wrapper">
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
-      <div class="fiexed-header">
+      <div class="fixed-header">
         <navbar></navbar>
+        <tags-view></tags-view>
       </div>
       <app-main></app-main>
     </div>
@@ -11,9 +12,10 @@
 </template>
 
 <script setup>
-import sidebar from './components'
-import Navbar from './Navbar.vue'
-import AppMain from './AppMain.vue'
+import Sidebar from './components'
+import Navbar from './Navbar'
+import AppMain from './AppMain'
+import TagsView from '../components/TagsView'
 </script>
 
 <style lang="scss" scoped>
@@ -31,8 +33,8 @@ import AppMain from './AppMain.vue'
     left: 0;
     top: 0;
     bottom: 0;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
   }
 
   .main-container {
@@ -51,6 +53,6 @@ import AppMain from './AppMain.vue'
   }
 }
 ::-webkit-scrollbar {
-  display: none;
+  display: none; /* Chrome Safari */
 }
 </style>

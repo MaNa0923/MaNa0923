@@ -34,12 +34,12 @@ const publicRoutes = [
       {
         path: '404',
         name: '404',
-        component: () => import('../views/chart')
+        component: () => import('../views/error-page/404')
       },
       {
         path: '401',
         name: '401',
-        component: () => import('../views/chart')
+        component: () => import('../views/error-page/401')
       }
     ]
   }
@@ -118,7 +118,7 @@ const privateRoutes = [
       {
         path: '/article/create',
         name: 'articleCreate',
-        component: () => import('../views/article-ranking'),
+        component: () => import('../views/article-create'),
         meta: {
           title: '创建文章',
           icon: 'article-creata'
